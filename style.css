@@ -10,6 +10,12 @@
 	background-color: #202023;
 }
 
+.tabchange{
+	color: #202023;
+	background-color: #b3b3b3;
+	border-radius: 0px;
+}
+
 .blue {
 		background-color: #4eb4a3;
 	color: #fff;
@@ -36,7 +42,7 @@
 }
 .lightgraypage {
 	display: flex;
-	background-color: #fbfbfb;
+	background-color: #b3b3b3;
 	color: #202023;
 	height: 600px;
 	justify-content: center;
@@ -90,6 +96,7 @@
 	align-items: center;
 	border-style: 2px solid white;
 	border-radius: 20px;
+	line-height: 90px;
 }
 
 p {
@@ -108,8 +115,15 @@ p {
 	width: 50%;
 }
 
-.readmore {
+.centerside{
+	text-align: center;
+	float: center;
+	width: 70%;
 }
+
+
+/*.readmore {
+}*/
 
 .boxed {
 	border: 1px solid white;
@@ -156,7 +170,8 @@ span.contact {
 	align-items: flex-end;
 font-family: 'Helvetica';
 	font-weight: 100;
-	line-height: 40px;
+	line-height: 90px;
+	background-color: #000d1a;
 }
 
 .dim {
@@ -164,8 +179,8 @@ font-family: 'Helvetica';
 
 }
 
-.bright {
-}
+/*.bright {
+}*/
 
 .pagefooter a:link, a:visited {
   color: #fff;
