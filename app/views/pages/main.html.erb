@@ -1,0 +1,5 @@
+<% @pages.each do |page| %>
+  <div class='<%= page.style %>'>
+    <%= render html: page.body.html_safe %>
+  </div>
+<% end %>

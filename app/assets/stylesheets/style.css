@@ -1,3 +1,4 @@
+/* --- Page section styles --- */
 .greypage {
 	display: flex;
 	color: #fff;
@@ -18,13 +19,17 @@
 .firstpage {
 	flex-direction: row-reverse;
 }
+
 .pagefooter {
 	display: flex;
 	color: #fff;
 	background-color: #202023;
 	height: 100px;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-end;
+font-family: 'Helvetica';
+	font-weight: 100;
+	line-height: 40px;
 }
 .whitepage {
 	display: flex;
@@ -51,10 +56,14 @@
 	align-items: center;
 }
 
+/* --- end page section styles --- */
+
+/* --- Page element styles --- */
 .heading {
 	font-family: 'Helvetica';
 	font-size: 2.5em;
 	font-weight: 0;
+	line-height: 2em;
 }
 
 .language {
@@ -62,10 +71,6 @@
 	color: white;
 	border: 1px solid white;
 	padding: 10px;
-}
-.language a:link, a:visited {
-	color: #fff;
-	text-decoration: none;
 }
 
 .centered {
@@ -123,7 +128,7 @@ p {
 
 .boxed-button {
 	border: 1px solid white;
-	padding: 30px;
+	padding: 15px;
 	width: 50%;
 	text-align: center;
 	margin: auto;
@@ -148,6 +153,12 @@ p {
 	line-height: 50px;
 }
 
+.contact textarea {
+	line-height: 20px;
+	height: 80px;
+	width: 400px;
+}
+
 span.contact {
 	background-color: #202023;
 	color: white;
@@ -156,22 +167,23 @@ span.contact {
 	line-height: 50px;
 }
 
-.pagefooter {
-	display: flex;
-	align-items: flex-end;
-font-family: 'Helvetica';
-	font-weight: 100;
-	line-height: 40px;
-}
-
 .dim {
 	color: #777;
-
 }
 
 .bright {
 }
 
-.pagefooter a:link, a:visited {
+a:link.whitelink, a:visited.whitelink {
   color: #fff;
+  text-decoration: none;
 }
+
+.edithtml {
+	font-style: normal;
+	font-size: 1em;
+	line-height: 30px;
+	height: 400px;
+	width: 800px;
+}
+/* --- end page element styles --- */
