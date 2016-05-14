@@ -1,59 +1,86 @@
-/* --- Page section styles --- */
-.greypage {
-	display: flex;
-	color: #fff;
-	background-color: #202023;
-	height: 600px;
+/* My first ever SASS page!
+	Author: Gregory Hedrick
+	Date: 5/14/16
+*/
+
+/* --- Color definitions --- */
+$darkgray:	#1B1E25;
+$blue:	#2ABBAC;
+$lightgray:  #FBFBFB;
+
+.dim {
+	color: #777;
+}
+
+.bright {
 }
 
 .grey {
-	color: #fff;
-	background-color: #202023;
+	background-color: $darkgray;
+	color: white;
 }
 
 .blue {
-		background-color: #4eb4a3;
-	color: #fff;
+	background-color: $blue;
+	color: white;
+}
+
+.white {
+	background-color: white;
+	color: $darkgray;
+}
+
+.lightgray {
+	background-color: $lightgray;
+	color: $darkgray;
+}
+/* --- end color definitions --- */
+
+/* --- Page section styles --- */
+
+.greypage {
+	@extend .grey;
+	display: flex;
+	height: 600px;
+}
+
+.bluepage {
+	@extend .blue;
+	display: flex;
+	height: 600px;
+	justify-content: center;
+	align-items: center;
+}
+
+.whitepage {
+	@extend .white;
+	display: flex;
+	height: 600px;
+	justify-content: center;
+	align-items: center;
+}
+.lightgraypage {
+	@extend .lightgray;
+	display: flex;
+	height: 600px;
+	justify-content: center;
+	align-items: center;
 }
 
 .firstpage {
+	@extend .greypage;
 	flex-direction: row-reverse;
 }
 
 .pagefooter {
 	display: flex;
-	color: #fff;
-	background-color: #202023;
+	@extend .grey;
 	height: 100px;
 	justify-content: center;
 	align-items: flex-end;
 font-family: 'Helvetica';
 	font-weight: 100;
 	line-height: 40px;
-}
-.whitepage {
-	display: flex;
-	color: #202023;
-	background-color: #fff;
-	height: 600px;
-	justify-content: center;
-	align-items: center;
-}
-.lightgraypage {
-	display: flex;
-	background-color: #fbfbfb;
-	color: #202023;
-	height: 600px;
-	justify-content: center;
-	align-items: center;
-}
-.bluepage {
-	display: flex;
-	background-color: #4eb4a3;
-	color: #fff;
-	height: 600px;
-	justify-content: center;
-	align-items: center;
 }
 
 /* --- end page section styles --- */
@@ -121,12 +148,39 @@ p {
 .readmore {
 }
 
+.contact input[type="text"], textarea {
+	@extend .grey;
+	border-style: solid;
+	border-width: 0px 0px 1px 0px;
+	font-style: italic;
+	font-size: 1.5em;
+	line-height: 50px;
+}
+
+.contact textarea {
+	line-height: 20px;
+	height: 80px;
+	width: 400px;
+}
+
+.contact input[type="submit"] {
+	font-weight: bold;
+	font-size: 1.5em;
+	border: 1px solid white;
+	padding: 15px;
+	width: 50%;
+	text-align: center;
+	margin: auto;
+}
+
 .boxed {
 	border: 1px solid white;
 	padding: 45px;
 }
 
 .boxed-button {
+	font-weight: bold;
+	font-size: 1.5em;
 	border: 1px solid white;
 	padding: 15px;
 	width: 50%;
@@ -143,35 +197,11 @@ p {
 	width: 80%;
 }
 
-.contact input, textarea {
-	background-color: #202023;
-	border-style: solid;
-	border-width: 0px 0px 1px 0px;
-	color: white;
-	font-style: italic;
-	font-size: 1.5em;
-	line-height: 50px;
-}
-
-.contact textarea {
-	line-height: 20px;
-	height: 80px;
-	width: 400px;
-}
-
 span.contact {
-	background-color: #202023;
-	color: white;
+	@extend .grey;
 	font-style: italic;
 	font-size: 1.5em;
 	line-height: 50px;
-}
-
-.dim {
-	color: #777;
-}
-
-.bright {
 }
 
 a:link.whitelink, a:visited.whitelink {
@@ -179,11 +209,18 @@ a:link.whitelink, a:visited.whitelink {
   text-decoration: none;
 }
 
+/* --- end page element styles --- */
+
+/* --- Admin pages element styles --- */
+
+.pagelist td {
+	border: 1px solid black;
+}
+
 .edithtml {
 	font-style: normal;
 	font-size: 1em;
-	line-height: 30px;
+	line-height: 20px;
 	height: 400px;
 	width: 800px;
 }
-/* --- end page element styles --- */

@@ -1,4 +1,11 @@
 class PagesController < ApplicationController
+  require 'rubygems'
+  require 'oauth'
+  # Hacked to allow POST requests from plain HTML
+    skip_before_filter :verify_authenticity_token 
+    skip_before_action :verify_authenticity_token
+  # I don't know how to fix this!
+
   before_action :set_page, only: [:show, :edit, :update, :destroy]
   before_action :full_index, only: [:index, :main]
   # GET /pages
@@ -62,6 +69,55 @@ class PagesController < ApplicationController
       format.html { redirect_to pages_url, notice: 'Page was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def submitform
+    @telephone = params["telephone"]
+    @name = params["name"]
+    @email = params["email"]
+    @howcanihelp = params["howcanihelp"]
+    SuperMailer.welcome_email(@name,
+                              @email,
+                              @telephone,
+                              @howcanihelp).deliver_now
+  end
+
+  def twitter
+    # Change the following values to those provided on dev.twitter.com
+    # The consumer key identifies the application making the request.
+    # The access token identifies the user making the request.
+
+    # shhhhh.......API Keys are encrypted. For reals!
+    keys={ ck1: "=_@{\x7FQOW]U>]`r;<k7\\w~k=:o",
+           ck2: "_npNnu?XQKvIRn[89MZwPa=`IJ`^h9|auxsas@@_=j\x7FI`p]^UY",
+           at1: ">8@<=>?==:?:>899<>4?MW8OaWK]\x81poXzaK=\x81\x81?JiU||ww\x7F^RQ",
+           at2: "nYPnq=o^Uh\x81qi[=\x7Fqoi<SyR<\x80it]qw8qqlp`XM\\\x7FYNxTu" }
+
+    consumer_key = OAuth::Consumer.new(
+        convertKey(keys[:ck1]), convertKey(keys[:ck2]))
+    access_token = OAuth::Token.new(
+        convertKey(keys[:at1]), convertKey(keys[:at2]))
+
+    # All requests will be sent to this server.
+    baseurl = "https://api.twitter.com"
+
+    # The verify credentials endpoint returns a 200 status if
+    # the request is signed correctly.
+    address = URI("#{baseurl}/1.1/account/verify_credentials.json")
+
+    # Set up Net::HTTP to use SSL, which is required by Twitter.
+    http = Net::HTTP.new address.host, address.port
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+    # Build the request and authorize it with OAuth.
+    request = Net::HTTP::Get.new address.request_uri
+    request.oauth! http, consumer_key, access_token
+
+    # Issue the request and return the response.
+    http.start
+    response = http.request request
+    puts "The response status was #{response.code}"
   end
 
   private
