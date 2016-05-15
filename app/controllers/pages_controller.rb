@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  include PagesHelper
   require 'rubygems'
   require 'oauth'
   # Hacked to allow POST requests from plain HTML
@@ -87,7 +88,7 @@ class PagesController < ApplicationController
     # The consumer key identifies the application making the request.
     # The access token identifies the user making the request.
 
-    # shhhhh.......API Keys are encrypted. For reals!
+    # The encryption level on these is over 9000 bits! Srsly.
     keys={ ck1: "=_@{\x7FQOW]U>]`r;<k7\\w~k=:o",
            ck2: "_npNnu?XQKvIRn[89MZwPa=`IJ`^h9|auxsas@@_=j\x7FI`p]^UY",
            at1: ">8@<=>?==:?:>899<>4?MW8OaWK]\x81poXzaK=\x81\x81?JiU||ww\x7F^RQ",
@@ -98,12 +99,24 @@ class PagesController < ApplicationController
     access_token = OAuth::Token.new(
         convertKey(keys[:at1]), convertKey(keys[:at2]))
 
-    # All requests will be sent to this server.
+    # Now you will fetch /1.1/statuses/user_timeline.json,
+    # returns a list of public Tweets from the specified
+    # account.
     baseurl = "https://api.twitter.com"
+    path    = "/1.1/statuses/user_timeline.json"
+    query   = URI.encode_www_form(
+        "screen_name" => "wyncode",
+        "count" => 5,
+    )
+    address = URI("#{baseurl}#{path}?#{query}")
+    request = Net::HTTP::Get.new address.request_uri
 
-    # The verify credentials endpoint returns a 200 status if
-    # the request is signed correctly.
-    address = URI("#{baseurl}/1.1/account/verify_credentials.json")
+    # # All requests will be sent to this server.
+    # baseurl = "https://api.twitter.com"
+
+    # # The verify credentials endpoint returns a 200 status if
+    # # the request is signed correctly.
+    # address = URI("#{baseurl}/1.1/account/verify_credentials.json")
 
     # Set up Net::HTTP to use SSL, which is required by Twitter.
     http = Net::HTTP.new address.host, address.port
@@ -117,7 +130,13 @@ class PagesController < ApplicationController
     # Issue the request and return the response.
     http.start
     response = http.request request
-    puts "The response status was #{response.code}"
+    @status = "The response status was #{response.code}"
+
+  # Parse and print the Tweet if the response code was 200
+    @tweets = nil
+    if response.code == '200' then
+      @tweets = JSON.parse(response.body)
+    end
   end
 
   private
