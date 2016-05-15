@@ -2,13 +2,13 @@
 
 <h1>Listing Pages</h1>
 
-<table class="pagelist">
+<table>
   <thead>
     <tr>
       <th>Title</th>
       <th>Body</th>
       <th>Style</th>
-      <th colspan="3">Actions</th>
+      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -18,9 +18,9 @@
         <td><%= page.title %></td>
         <td><%= page.body %></td>
         <td><%= page.style %></td>
-        <td><%= link_to 'Show', page %>
-            <%= link_to 'Edit', edit_page_path(page) %>
-            <%= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <td><%= link_to 'Show', page %></td>
+        <td><%= link_to 'Edit', edit_page_path(page) %></td>
+        <td><%= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -29,4 +29,3 @@
 <br>
 
 <%= link_to 'New Page', new_page_path %>
-<%= link_to 'Display', root_path %>

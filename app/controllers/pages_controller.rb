@@ -1,4 +1,8 @@
 class PagesController < ApplicationController
+  include PagesHelper
+  require 'rubygems'
+  require 'oauth'
+
   # Hacked to allow POST requests from plain HTML
     skip_before_filter :verify_authenticity_token 
     skip_before_action :verify_authenticity_token
@@ -85,25 +89,28 @@ class PagesController < ApplicationController
     # The consumer key identifies the application making the request.
     # The access token identifies the user making the request.
 
-    # shhhhh.......API Keys are encrypted. For reals!
-    keys={ ck1: "h36dwpU0d54kYV7NVPHJxt9X6",
-           ck2: "RNWViYBxc6X99lZlqnZu2aWYCBY6ZIpSF21TgKBoDJQ8ngGigX",
-           at1: "JKWxppuuNbC8zz6DZsQhizVDPZH1PF8-752217383668765917",
-           at2: "nMqGRxUFQYiejj1pjVmby5KrL5bhjx6TbjzaNWh6jgIRg" }
-    def convertKey(fake)
-      fake.chars.reverse.join
-    end
-   client = TwitterOAuth::Client.new(
-   :consumer_key => convertKey(keys[:ck1]),
-   :consumer_secret => convertKey(keys[:ck2]),
-   :token => convertKey(keys[:at1]), 
-   :secret => convertKey(keys[:at2]))
-   return client
+    # The encryption level on these is over 9000 bits! Srsly.
+    keys={ ck1: "=_@{\x7FQOW]U>]`r;<k7\\w~k=:o",
+           ck2: "_npNnu?XQKvIRn[89MZwPa=`IJ`^h9|auxsas@@_=j\x7FI`p]^UY",
+           at1: ">8@<=>?==:?:>899<>4?MW8OaWK]\x81poXzaK=\x81\x81?JiU||ww\x7F^RQ",
+           at2: "nYPnq=o^Uh\x81qi[=\x7Fqoi<SyR<\x80it]qw8qqlp`XM\\\x7FYNxTu" }
 
-    # consumer_key = OAuth::Consumer.new(
-    #     convertKey(keys[:ck1]), convertKey(keys[:ck2]))
-    # access_token = OAuth::Token.new(
-    #     convertKey(keys[:at1]), convertKey(keys[:at2]))
+    consumer_key = OAuth::Consumer.new(
+        convertKey(keys[:ck1]), convertKey(keys[:ck2]))
+    access_token = OAuth::Token.new(
+        convertKey(keys[:at1]), convertKey(keys[:at2]))
+
+    # Now you will fetch /1.1/statuses/user_timeline.json,
+    # returns a list of public Tweets from the specified
+    # account.
+    baseurl = "https://api.twitter.com"
+    path    = "/1.1/statuses/user_timeline.json"
+    query   = URI.encode_www_form(
+        "screen_name" => "wyncode",
+        "count" => 5,
+    )
+    address = URI("#{baseurl}#{path}?#{query}")
+    request = Net::HTTP::Get.new address.request_uri
 
     # # All requests will be sent to this server.
     # baseurl = "https://api.twitter.com"
@@ -112,19 +119,25 @@ class PagesController < ApplicationController
     # # the request is signed correctly.
     # address = URI("#{baseurl}/1.1/account/verify_credentials.json")
 
-    # # Set up Net::HTTP to use SSL, which is required by Twitter.
-    # http = Net::HTTP.new address.host, address.port
-    # http.use_ssl = true
-    # http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    # Set up Net::HTTP to use SSL, which is required by Twitter.
+    http = Net::HTTP.new address.host, address.port
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-    # # Build the request and authorize it with OAuth.
-    # request = Net::HTTP::Get.new address.request_uri
-    # request.oauth! http, consumer_key, access_token
+    # Build the request and authorize it with OAuth.
+    request = Net::HTTP::Get.new address.request_uri
+    request.oauth! http, consumer_key, access_token
 
-    # # Issue the request and return the response.
-    # http.start
-    # response = http.request request
-    # puts "The response status was #{response.code}"
+    # Issue the request and return the response.
+    http.start
+    response = http.request request
+    @status = "The response status was #{response.code}"
+
+  # Parse and print the Tweet if the response code was 200
+    @tweets = nil
+    if response.code == '200' then
+      @tweets = JSON.parse(response.body)
+    end
   end
 
   private

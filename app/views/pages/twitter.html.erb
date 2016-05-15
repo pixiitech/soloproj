@@ -1,1 +1,17 @@
-<h3>Twitter stuff:</h3>
+
+<!-- <h3>Tweets from @wyncode:</h3> -->
+	<% @tweets.each do |tweet| %>
+		<%#  JSON.pretty_generate(tweet) %>
+  	<tr>
+  		<td><img src="twitter.png" /></td>
+			<td><%= tweet["created_at"] %><br />
+		  <%= tweet["text"] %><br /></td>
+		</tr>
+		<% if (tweet != @tweets.last) %>
+			<tr>
+		  	<td colspan='2'>
+		  		<hr>
+		  	</td>
+		  </tr>
+		<% end %>
+	<% end %>
