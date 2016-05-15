@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :pages
 
   root 'pages#main'
+
+  post "submitform" => 'pages#submitform'
+  get "twitter" => 'pages#twitter'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

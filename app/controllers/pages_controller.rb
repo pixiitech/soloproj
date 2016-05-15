@@ -17,6 +17,12 @@ class PagesController < ApplicationController
 
   # GET /
   def main
+    @pages.each do |page|
+      if (page.body.index("<twitter />"))
+        twitter
+        page.body.gsub!("<twitter />", render_to_string("twitter"))
+      end
+    end
   end
 
   # GET /pages/1
@@ -78,7 +84,7 @@ class PagesController < ApplicationController
     @name = params["name"]
     @email = params["email"]
     @howcanihelp = params["howcanihelp"]
-    SuperMailer.welcome_email(@name,
+    SuperMailer.super_mailer(@name,
                               @email,
                               @telephone,
                               @howcanihelp).deliver_now
