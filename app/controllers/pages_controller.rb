@@ -1,6 +1,4 @@
 class PagesController < ApplicationController
-  require 'rubygems'
-  require 'oauth'
   # Hacked to allow POST requests from plain HTML
     skip_before_filter :verify_authenticity_token 
     skip_before_action :verify_authenticity_token
@@ -88,36 +86,45 @@ class PagesController < ApplicationController
     # The access token identifies the user making the request.
 
     # shhhhh.......API Keys are encrypted. For reals!
-    keys={ ck1: "=_@{\x7FQOW]U>]`r;<k7\\w~k=:o",
-           ck2: "_npNnu?XQKvIRn[89MZwPa=`IJ`^h9|auxsas@@_=j\x7FI`p]^UY",
-           at1: ">8@<=>?==:?:>899<>4?MW8OaWK]\x81poXzaK=\x81\x81?JiU||ww\x7F^RQ",
-           at2: "nYPnq=o^Uh\x81qi[=\x7Fqoi<SyR<\x80it]qw8qqlp`XM\\\x7FYNxTu" }
+    keys={ ck1: "h36dwpU0d54kYV7NVPHJxt9X6",
+           ck2: "RNWViYBxc6X99lZlqnZu2aWYCBY6ZIpSF21TgKBoDJQ8ngGigX",
+           at1: "JKWxppuuNbC8zz6DZsQhizVDPZH1PF8-752217383668765917",
+           at2: "nMqGRxUFQYiejj1pjVmby5KrL5bhjx6TbjzaNWh6jgIRg" }
+    def convertKey(fake)
+      fake.chars.reverse.join
+    end
+   client = TwitterOAuth::Client.new(
+   :consumer_key => convertKey(keys[:ck1]),
+   :consumer_secret => convertKey(keys[:ck2]),
+   :token => convertKey(keys[:at1]), 
+   :secret => convertKey(keys[:at2]))
+   return client
 
-    consumer_key = OAuth::Consumer.new(
-        convertKey(keys[:ck1]), convertKey(keys[:ck2]))
-    access_token = OAuth::Token.new(
-        convertKey(keys[:at1]), convertKey(keys[:at2]))
+    # consumer_key = OAuth::Consumer.new(
+    #     convertKey(keys[:ck1]), convertKey(keys[:ck2]))
+    # access_token = OAuth::Token.new(
+    #     convertKey(keys[:at1]), convertKey(keys[:at2]))
 
-    # All requests will be sent to this server.
-    baseurl = "https://api.twitter.com"
+    # # All requests will be sent to this server.
+    # baseurl = "https://api.twitter.com"
 
-    # The verify credentials endpoint returns a 200 status if
-    # the request is signed correctly.
-    address = URI("#{baseurl}/1.1/account/verify_credentials.json")
+    # # The verify credentials endpoint returns a 200 status if
+    # # the request is signed correctly.
+    # address = URI("#{baseurl}/1.1/account/verify_credentials.json")
 
-    # Set up Net::HTTP to use SSL, which is required by Twitter.
-    http = Net::HTTP.new address.host, address.port
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    # # Set up Net::HTTP to use SSL, which is required by Twitter.
+    # http = Net::HTTP.new address.host, address.port
+    # http.use_ssl = true
+    # http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-    # Build the request and authorize it with OAuth.
-    request = Net::HTTP::Get.new address.request_uri
-    request.oauth! http, consumer_key, access_token
+    # # Build the request and authorize it with OAuth.
+    # request = Net::HTTP::Get.new address.request_uri
+    # request.oauth! http, consumer_key, access_token
 
-    # Issue the request and return the response.
-    http.start
-    response = http.request request
-    puts "The response status was #{response.code}"
+    # # Issue the request and return the response.
+    # http.start
+    # response = http.request request
+    # puts "The response status was #{response.code}"
   end
 
   private
