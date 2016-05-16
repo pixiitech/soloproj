@@ -1,5 +1,10 @@
 == README
 
+* BE SURE TO RUN rake db:seed to create the individual web pages! (they are stored in the db)
+
+
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
