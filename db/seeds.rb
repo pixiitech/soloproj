@@ -28,11 +28,14 @@ Page.create(title: "bio", body:"		<div class='leftside'>
 		</div>
 		<div class='rightside'>
 			<p>
-				<img src='trianglecircle.png' />
+				<img src='/trianglecircle.png' /><br /><br /><br /><br />
 			</p>
-			<p>
-				<div class='readmore'>+</div>
-			</p>
+			<div>
+				<span class='readmore'>&nbsp;+&nbsp;</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
 		</div>", style: "whitepage")
 Page.create(title: "frontenddev", body: "		<div class='leftside'>
 			<p>

@@ -7,6 +7,7 @@
 $darkgray:	#1B1E25;
 $blue:	#2ABBAC;
 $lightgray:  #FBFBFB;
+$gray: #777;
 
 .dim {
 	color: #777;
@@ -50,6 +51,7 @@ $lightgray:  #FBFBFB;
 	height: 600px;
 	justify-content: center;
 	align-items: center;
+	font-family: 'Times new roman';
 }
 
 .whitepage {
@@ -58,6 +60,7 @@ $lightgray:  #FBFBFB;
 	height: 600px;
 	justify-content: center;
 	align-items: center;
+	font-family: 'Times new roman';
 }
 .lightgraypage {
 	@extend .lightgray;
@@ -65,6 +68,7 @@ $lightgray:  #FBFBFB;
 	height: 600px;
 	justify-content: center;
 	align-items: center;
+	font-family: 'Times new roman';
 }
 
 .firstpage {
@@ -78,14 +82,19 @@ $lightgray:  #FBFBFB;
 	height: 100px;
 	justify-content: center;
 	align-items: flex-end;
-font-family: 'Helvetica';
+  font-family: 'Helvetica';
 	font-weight: 100;
 	line-height: 40px;
 }
 
+body {
+	font-family: 'Times new roman';
+	font-size: 1em;
+}
 /* --- end page section styles --- */
 
 /* --- Page element styles --- */
+
 .heading {
 	font-family: 'Helvetica';
 	font-size: 2.5em;
@@ -129,6 +138,18 @@ font-family: 'Helvetica';
 	justify-content: space-around;*/
 }
 
+.readmore {
+	font-family: 'Times New Roman';
+	font-size: 4em;
+	height: 60px;
+	width: 120px;
+	color: white;
+	background-color: $darkgray;
+	border-radius: 50%;
+	border: 1px solid white;
+	text-align: center;
+}
+
 p {
 	padding: 30px;
 }
@@ -136,16 +157,25 @@ p {
 .leftside {
 	text-align: center;
 	float: left;
-	width: 50%;
+	width: 40%;
 }
 
 .rightside {
 	text-align: center;
 	float: right;
-	width: 50%;
+	width: 40%;
 }
 
-.readmore {
+.leftside p, .rightside p {
+	font-size: 1.1em;
+	line-height: 1.2em;
+	font-family: 'Times new roman';
+	text-align: left;
+	color: $gray;
+}
+
+.rightside div {
+	text-align: center;
 }
 
 .contact input[type="text"], textarea {
@@ -179,6 +209,7 @@ p {
 }
 
 .boxed-button {
+	font-family: 'Helvetica';
 	font-weight: bold;
 	font-size: 1.5em;
 	border: 1px solid white;
